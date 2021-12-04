@@ -9,6 +9,10 @@ if exist('LeapSDK')~=7
     error('The "LeapSDK" folder cannot be found.  A link with this name should point to the directory that contains the SDK.');
 end
 
+if exist('LeapC.dll')~=2
+    error('The "LeapC.dll" file cannot be found. The file should be placed in the same directory as build.m');
+end
+
 % determine where the Leap library is located
 if ismac
     libdir_switch='-L./LeapSDK/lib';
