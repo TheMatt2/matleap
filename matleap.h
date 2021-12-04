@@ -75,13 +75,24 @@ class frame_grabber
     const frame &get_frame ()
     {
 		LEAP_TRACKING_EVENT* frame = GetFrame();
-		current_frame.id = frame->tracking_frame_id;
-        if (debug)
-            mexPrintf ("Got frame with id %d\n", current_frame.id);
-		current_frame.timestamp = frame->info.timestamp;
-		current_frame.detectedHands = frame->nHands;
-		current_frame.hands = frame->pHands;
-        return current_frame;
+        if (frame) {
+            current_frame.id = frame->tracking_frame_id;
+            if (debug)
+                mexPrintf("Got frame with id %d\n", current_frame.id);
+            current_frame.timestamp = frame->info.timestamp;
+            current_frame.detectedHands = frame->nHands;
+            current_frame.hands = frame->pHands;
+            return current_frame;
+        }
+        else {
+            current_frame.id = 0;
+            if (debug)
+                mexPrintf("Got null frame\n");
+            current_frame.timestamp = 0;
+            current_frame.detectedHands = 0;
+            current_frame.hands = NULL;
+            return current_frame;
+        }
     }
 };
 
